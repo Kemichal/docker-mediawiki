@@ -20,7 +20,7 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 20M/g' /etc/php/7.0/fpm/ph
 sed -i 's/post_max_size.*/post_max_size = 20M/g' /etc/php/7.0/fpm/php.ini
 
 # Change owner so that nginx can write files
-chown -R www-data:www-data /var/www/html
+chown -R www-data:www-data /usr/src/mediawiki/
 
 # Validate
 if [ -z "${DB_PASSWORD}" ]; then
