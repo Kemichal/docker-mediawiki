@@ -1,0 +1,35 @@
+version: "3.0"
+services:
+    mysql:
+        image: mysql:5.7.20
+        container_name: mysql
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=testing
+    mediawiki:
+        image: kemichal/mediawiki:1.29.2-1
+        build:
+            context: .
+            args:
+                - MEDIAWIKI_VERSION=1.29.2
+        container_name: wiki
+        privileged: true
+        ports:
+            - "80:80"
+        volumes:
+            - /srv/wiki:/data:rw
+        environment:
+            - DB_PASSWORD=testing
+            - MW_EMAIL=test@localhost
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.6.5.2-2
+        container_name: phpmyadmin
+        restart: always
+        environment:
+            - PMA_ARBITRARY=0
+            - PMA_HOST=mysql
+        restart: always
+        ports:
+            - "8080:80"
+        volumes:
+            - /sessions
