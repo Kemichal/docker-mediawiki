@@ -3,16 +3,17 @@ services:
     mysql:
         image: mysql:5.7.20
         container_name: mysql
-        restart: always
+        restart: unless-stopped
         environment:
             - MYSQL_ROOT_PASSWORD=testing
     mediawiki:
-        image: kemichal/mediawiki:1.29.2-1
+        image: kemichal/mediawiki:1.29.2-3
         build:
             context: .
             args:
                 - MEDIAWIKI_VERSION=1.29.2
         container_name: wiki
+        restart: unless-stopped
         privileged: true
         ports:
             - "80:80"
@@ -24,7 +25,7 @@ services:
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.6.5.2-2
         container_name: phpmyadmin
-        restart: always
+        restart: unless-stopped
         environment:
             - PMA_ARBITRARY=0
             - PMA_HOST=mysql
